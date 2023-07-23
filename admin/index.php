@@ -4,8 +4,8 @@ if (isset($_POST["submit"])) {
     $file = $_FILES["image"]["tmp_name"];
     $name = $_POST['name'];
     $released =  $_POST['year'];
-    $available = $_post['available'];
-    $genre = $_post['genre'];
+    $available = $_POST['available'];
+    $genre = $_POST['genre'];
 
     //gets the file extention and saves image with the movie name in the server 
     $file_ext = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
@@ -16,10 +16,10 @@ if (isset($_POST["submit"])) {
     move_uploaded_file($file, $destination);
 
     //storing in database 
-    $sql = "INSERT INTO movie (movie_name, released, total_disk, genre) values ('$name', '$released', '$available', '$genre')";
-    $sq_img = "INSERT INTO image (img_name, img_dir) VALUES ('$filename', '$img_dir')";
-    $result_img = mysqli_query($con, $sql);
-    if (!$result && !$result_img) {
+    $sql = "INSERT INTO movie (movie_name, img_name, img_dir, released, total_disk, genre) values ('$name', '$filename', '$img_dir', '$released', '$available', '$genre')";
+
+    $result = mysqli_query($con, $sql);
+    if (!$result) {
         die("Insertion failed: " . mysqli_error($con));
     }
     echo "Data added successfully.";

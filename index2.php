@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: info.html");
+    header("Location: info.php");
     exit();
 }
 include_once("admin/dbcon.php");
@@ -18,15 +18,6 @@ if (!$result) die("Database fetch failed: " . mysqli_error($con));
     <title>Movient</title>
     <link rel="stylesheet" type="text/css" href="body.css">
     <style>
-        .sort {
-            width: 30%;
-            align-content: center;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 10px;
-        }
-
         table {
             height: auto;
 
@@ -65,18 +56,6 @@ if (!$result) die("Database fetch failed: " . mysqli_error($con));
 
 <body>
 
-    <div class="sort">
-        <label for="search">Search Movie</label>
-        <input type="text" id="movie_search" name="movie_search">
-        <label for="sortby">Sort by</label>
-        <select id="soryby" name="sortby">
-            <option value="default">None</option>
-
-            <option value="release">Year</option>
-            <option value="genre">genre</option>
-            <option value="No of copies">No Of copies</option>
-        </select>
-    </div>
     <div class="container">
         <table width='70%' border="0">
             <tr>
@@ -85,25 +64,25 @@ if (!$result) die("Database fetch failed: " . mysqli_error($con));
                 <td>Total Copies</td>
                 <td>Genre</td>
                 <td>Released year</td>
-                <td>Rent</td>
             </tr>
             <?php
-            $count = 0;
-
             while ($row = mysqli_fetch_array($result)) {
+                $count = 1;
 
             ?>
                 <div class="details">
+                    <!-- <h3><?php echo $row['movie_name'] ?></h3> -->
                     <?php
                     echo "<tr>";
-                    $count += 1;
 
                     echo "<td>" . $count . "</td>";
-                    echo "<td >" . $row['movie_name'] . "</td>";
+
+                    echo "<td>" . $row['movie_name'] . "</td>";
+
                     echo "<td>" . $row['total_disk'] . "</td>";
                     echo "<td>" . $row['genre'] . "</td>";
                     echo "<td>" . $row['released'] . "</td>";
-                    echo "<td><a href=\"rentOng.php?id=$row[movie_id]\" onClick=\"return confirm('Are you sure you want to rent?')\">Rent</a></td>";
+                    $count++;
                     echo "</tr>"
 
                     ?>
