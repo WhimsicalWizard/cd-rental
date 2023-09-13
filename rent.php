@@ -16,7 +16,7 @@ if (isset($_SESSION['error'])) {
 
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: info.php");
+    header("Location: info.html");
     exit();
 }
 
@@ -25,7 +25,7 @@ $nameRow = mysqli_fetch_assoc($nameQuery);
 $name = $nameRow['memberName'];
 
 // Modify the query to fetch data from the "movies" table
-$result = mysqli_query($con, "SELECT * FROM movie m JOIN rent r ON m.movie_id = r.movie_id WHERE r.rented_by = '" . $_SESSION['user_id'] . "'");
+$result = mysqli_query($con, "SELECT * FROM rent r JOIN movie m ON r.movie_id= m.movie_id   WHERE r.rented_by = '" . $_SESSION['user_id'] . "'order by r_id asc");
 include_once('header.html');
 ?>
 
@@ -153,7 +153,7 @@ include_once('header.html');
                 <td>Movie Name</td>
                 <td>Rented At</td>
                 <td>Return By</td>
-                <td>Return Status</td> <!-- New column for showing the return status -->
+                <td>Return Status</td> <!-- column for showing the return status -->
                 <td>Genre</td>
                 <td>Released year</td>
                 <td>Action</td> <!-- New column for the "Return" link -->
@@ -166,10 +166,13 @@ include_once('header.html');
 
         <?php
         $count = 1;
-        $rent = mysqli_query($con, "SELECT * FROM rent WHERE rented_by = '" . $_SESSION['user_id'] . "' order by r_id asc");
+
         while ($mov = mysqli_fetch_array($result)) {
             $movie = mysqli_query($con, "Select * from movie where movie_id= '" . $mov['movie_id'] . "'");
             $row = mysqli_fetch_assoc($movie);
+
+
+           
             echo "<tr>";
             echo "<td>" . $mov['r_id'] . "</td>";
             echo "<td>" . $row['movie_name'] . "</td>";
@@ -194,6 +197,7 @@ include_once('header.html');
             $count++;
             echo "</tr>";
         }
+
         ?>
         </table>
     </div>
