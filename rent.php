@@ -5,13 +5,13 @@ include_once('admin/dbcon.php');
 // Check for and display success message
 if (isset($_SESSION['message'])) {
     echo "<script>alert('" . $_SESSION['message'] . "');</script>";
-    unset($_SESSION['message']); // Clear the message to avoid displaying it again on refresh
+    unset($_SESSION['message']);
 }
 
 // Check for and display error message
 if (isset($_SESSION['error'])) {
     echo "<script>alert('" . $_SESSION['error'] . "');</script>";
-    unset($_SESSION['error']); // Clear the error to avoid displaying it again on refresh
+    unset($_SESSION['error']);
 }
 
 
@@ -24,7 +24,6 @@ $nameQuery = mysqli_query($con, "SELECT memberName FROM members WHERE m_id = '" 
 $nameRow = mysqli_fetch_assoc($nameQuery);
 $name = $nameRow['memberName'];
 
-// Modify the query to fetch data from the "movies" table
 $result = mysqli_query($con, "SELECT * FROM rent r JOIN movie m ON r.movie_id= m.movie_id   WHERE r.rented_by = '" . $_SESSION['user_id'] . "'order by r_id asc");
 include_once('header.html');
 ?>
@@ -85,7 +84,6 @@ include_once('header.html');
             padding: 8px;
         }
 
-        /* Style for the table header */
         th {
             background-color: #aaf0fa;
         }
@@ -127,21 +125,11 @@ include_once('header.html');
     <div class="name">
         <?php echo "Welcome " . $name . "</br>";
         ?>
-        <a href="index.php">Rent Movie</a>
+
     </div>
 
 
-    <!-- <div class="sort">
-        <label for="search">Search Movie</label>
-        <input type="text" id="movie_search" name="movie_search">
-        <label for="sortby">Sort by</label>
-        <select id="sortby" name="sortby">
-            <option value="default">None</option>
-            <option value="release">Year</option>
-            <option value="genre">Genre</option>
-            <option value="return">Return Status</option>
-        </select>
-    </div> -->
+
 
 
 
@@ -153,10 +141,9 @@ include_once('header.html');
                 <td>Movie Name</td>
                 <td>Rented At</td>
                 <td>Return By</td>
-                <td>Return Status</td> <!-- column for showing the return status -->
                 <td>Genre</td>
                 <td>Released year</td>
-                <td>Action</td> <!-- New column for the "Return" link -->
+                <td>Action</td>
             </tr>
     </div>
 
@@ -172,19 +159,12 @@ include_once('header.html');
             $row = mysqli_fetch_assoc($movie);
 
 
-           
+
             echo "<tr>";
-            echo "<td>" . $mov['r_id'] . "</td>";
+            echo "<td>" . $count . "</td>";
             echo "<td>" . $row['movie_name'] . "</td>";
             echo "<td>" . $mov['r_date'] . "</td>";
             echo "<td>" . $mov['return_date'] . "</td>";
-            echo "<td>";
-            if ($mov['return_status'] == 1) {
-                echo "Returned";
-            } else {
-                echo "Not Returned";
-            }
-            echo "</td>";
             echo "<td>" . $row['genre'] . "</td>";
             echo "<td>" . $row['released'] . "</td>";
             echo "<td>";
@@ -194,8 +174,8 @@ include_once('header.html');
                 echo "N/A";
             }
             echo "</td>";
-            $count++;
             echo "</tr>";
+            $count++;
         }
 
         ?>
