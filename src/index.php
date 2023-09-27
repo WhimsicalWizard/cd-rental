@@ -78,15 +78,13 @@ if (!$result) die("Database fetch failed: " . mysqli_error($con));
                     <?php
                     echo "<tr>";
                     $count += 1;
-
                     echo "<td>" . $count . "</td>";
-
-                    echo '<td><a href="movie.php?id=$row[movie_id]">' . $row['movie_name'] . '</a></td>';
-
+                    echo "<td><a href=movie.php?id=" . $row["movie_id"] . ">" . $row["movie_name"] . "</a></td>";
                     echo "<td>" . $row['total_disk'] . "</td>";
                     echo "<td>" . $row['genre'] . "</td>";
                     echo "<td>" . $row['released'] . "</td>";
                     echo "<td><a href=\"rentOng.php?id=$row[movie_id]\" onClick=\"return confirm('Are you sure you want to rent?') \" class=\"link-red\">Rent</a></td>";
+
                     echo "</tr>"
                     ?>
                 </div>

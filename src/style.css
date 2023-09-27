@@ -35,37 +35,35 @@ h1{
 
 }
 label{
-    font-size: 1.2rem;
-margin-top: 15px;
-display: block;
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="password"]{
-   margin-top: 5px;
-   font-size: 1rem;
-   border-radius: 5px;
-  padding: 5px;
-   height: auto;
-   width: 100%;
-}
-input[type="submit"]{
-    margin-top: 10px;
-    font-size: 1rem;
-    
- padding: 5px;
-   border: none;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 20px;
-    color: #e6edf3;
-    background-color: #018715;
-  }
-  
-  input[type="submit"]:hover{
-    cursor: pointer;
-    background-color: #39ad50;
-  }
+    font-size: 16px;
+}
 
  
+  input[type="submit"]{
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+input[type="submit"]:hover{
+    background-color: #0056b3;
+}

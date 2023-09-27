@@ -6,7 +6,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 include_once("header.html");
 include_once("admin/dbcon.php");
-$result = mysqli_query($con, "select * from movie");
+
+$id = $_GET["id"];
+$result = mysqli_query($con, "select * from movie where movie_id = $id");
 if (!$result) {
     die("Error: " . mysqli_error($con));
 }
@@ -25,6 +27,15 @@ $row = mysqli_fetch_assoc($result);
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <style>
+        .details {
+            width: 50%;
+            height: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            align-content: center;
+
+        }
+
         img {
             width: 50%;
             height: 50%;
@@ -33,6 +44,8 @@ $row = mysqli_fetch_assoc($result);
         .link-red {
             color: red;
         }
+
+
 
         .link-red:hover {
             color: blue;
@@ -43,7 +56,7 @@ $row = mysqli_fetch_assoc($result);
 <body>
     <h2>Movie Details</h2>
     <div class="details">
-        <img src="image/<?php echo $row['img_name']; ?>" alt="Movie Image">
+        <img src="admin/image/<?php echo $row['img_name']; ?>" alt="Movie Image">
         <p>Movie Name: <?php echo $row['movie_name']; ?></p>
         <p>Total Copies: <?php echo $row['total_disk']; ?></p>
         <p>Genre: <?php echo $row['genre']; ?></p>

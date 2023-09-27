@@ -9,10 +9,9 @@ if (isset($_POST["submit"])) {
 
     //gets the file extention and saves image with the movie name in the server 
     $file_ext = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-    echo $file_ext;
     $filename = $name . '.' . $file_ext;
     $img_dir = "image/";
-    $destination = "D:/Applications/xammm/htdocs/movient/images/" . $filename;
+    $destination = "image/" . $filename;
     move_uploaded_file($file, $destination);
 
     //storing in database 

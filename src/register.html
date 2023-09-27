@@ -49,7 +49,7 @@
     function validateUsername(field) {
       if (field === "") return "No Username was entered.\n";
       else if (field.length < 5) return "Username must be at least 5 characters.\n";
-      else if (/[^a-zA-Z0-9_-]/.test(field)) return "Only a-z, A-Z, 0-9, - and _ allowed in Username.\n";
+      else if (!/[^a-zA-Z0-9_-]/.test(field)) return "Only a-z, A-Z, 0-9, - and _ allowed in Username.\n";
       return "";
     }
 
