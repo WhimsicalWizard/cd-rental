@@ -24,28 +24,39 @@ $row = mysqli_fetch_assoc($result);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Details</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="body.css">
 
     <style>
         .details {
             width: 50%;
-            height: 50%;
-            margin-left: auto;
-            margin-right: auto;
-            align-content: center;
-
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #012324;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgb(0, 3, 3);
         }
 
+
         img {
-            width: 50%;
-            height: 50%;
+            max-width: 100%;
+            max-height: 500px;
+            width: auto;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
         }
 
         .link-red {
             color: red;
+            text-decoration: none;
         }
-
-
 
         .link-red:hover {
             color: blue;
@@ -54,8 +65,8 @@ $row = mysqli_fetch_assoc($result);
 </head>
 
 <body>
-    <h2>Movie Details</h2>
     <div class="details">
+
         <img src="admin/image/<?php echo $row['img_name']; ?>" alt="Movie Image">
         <p>Movie Name: <?php echo $row['movie_name']; ?></p>
         <p>Total Copies: <?php echo $row['total_disk']; ?></p>
