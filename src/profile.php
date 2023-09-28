@@ -32,8 +32,11 @@ $row = mysqli_fetch_assoc($result);
         .container {
             display: flex;
             justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
             align-items: center;
             height: 100vh;
+            background-color: #042425;
         }
 
 
@@ -44,7 +47,8 @@ $row = mysqli_fetch_assoc($result);
             margin-top: 10px;
         }
 
-        input[type="text"] {
+        input[type="text"],
+        [type="password"] {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -103,27 +107,33 @@ $row = mysqli_fetch_assoc($result);
 
 
         <form>
-            <?php
-            echo $row["memberName"]
-            ?>
+            <label>
+                <?php
+                echo $row["memberName"]
+                ?>
+                <?php
+                echo $row["memberlast_name"]
+                ?>
+            </label>
 
-            <?php
-            echo $row["memberlast_name"]
-            ?>
+            <label>
+                <?php
+                echo "Phone no: " . $row["phone"]
+                ?>
+            </label>
 
             <label>Username</label>
 
             <input type="text" id="username" name="username" value="<?php
-                                                                    echo $row["username"]
-                                                                    ?>">
+                                                                    echo $row["username"] ?>">
 
             <p id="usernameCheck" class="error"></p>
             <input class='btn' type="button" id="submitform" value="Update" />
             <label>Change Password</label>
-            <input type="text" id="password1" name="password">
+            <input type="password" id="password1" name="password">
 
             <label>Confirm Password</label>
-            <input type="text" id="password2" name="confirmp">
+            <input type="password" id="password2" name="confirmp">
             <input class='btn' type="button" id="passwordupdate" value="Confirm" />
             <p id="passwordcheck" class="error"></p>
             <a href="logout.php" id="logging">Log Out</a>

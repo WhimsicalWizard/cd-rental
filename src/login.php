@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
                 $error = "Invalid Password";
             }
         } else {
-            $error = "Invalid username";
+            $error += "Invalid username";
         }
     } else {
         $error = "The user doesn't exist";

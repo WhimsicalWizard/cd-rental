@@ -1,57 +1,81 @@
 <?php
 include_once("dbcon.php");
-if (isset($_POST["submit"])) {
-    $file = $_FILES["image"]["tmp_name"];
-    $name = $_POST['name'];
-    $released =  $_POST['year'];
-    $available = $_POST['available'];
-    $genre = $_POST['genre'];
+include_once("header.html");
+session_start();
 
-    //gets the file extention and saves image with the movie name in the server 
-    $file_ext = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
-    $filename = $name . '.' . $file_ext;
-    $img_dir = "image/";
-    $destination = "image/" . $filename;
-    move_uploaded_file($file, $destination);
+$sql = "SELECT * FROM movie";
+$result = mysqli_query($con, $sql);
 
-    //storing in database 
-    $sql = "INSERT INTO movie (movie_name, img_name, img_dir, released, total_disk, genre) values ('$name', '$filename', '$img_dir', '$released', '$available', '$genre')";
-
-    $result = mysqli_query($con, $sql);
-    if (!$result) {
-        die("Insertion failed: " . mysqli_error($con));
-    }
-    echo "Data added successfully.";
+if (!$result) {
+    die("Error: " . mysqli_error($con));
 }
 
 
+if (isset($_SESSION['message'])) {
+    echo "<script>alert('" . $_SESSION['message'] . "');</script>";
+    unset($_SESSION['message']);
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Select Movie to Edit</title>
+    <style>
+        body {
+            background-color: #020223;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .real {
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #020227;
+            box-shadow: 0 0 50px rgba(100, 100, 100, 1);
+            width: 50%;
+            margin: 10px auto;
+
+        }
+
+        .view {
+            border: none;
+            margin: 10px auto;
+            text-align: center;
+
+            padding: 10px;
+        }
+
+        .view a {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .view a:hover {
+            color: #00aa0f;
+        }
+    </style>
 </head>
 
 <body>
-    <form action="index.php" method="post" enctype="multipart/form-data">
-        <label>Movie Name</label>
-        <input type="text" name="name" value="" required> <br>
-        <label>Upload Image</label>
-        <input type="file" name="image" value="" required><br>
-        <label>Released Year</label>
-        <input type="text" name="year" value="" required><br>
-        <label>Available</label>
-        <input type="text" name="available" value="" required>
-        <br>
-        <label>genre</label>
-        <input type="text" name="genre" value="" required>
-        <br>
-        <input type="submit" value="Submit" name="submit">
-    </form>
+    <div class="real">
+        <h1>Select Movie to Edit</h1>
+        <div class="view">
 
+            <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+                <a href="edit.php?id=<?php echo $row['movie_id']; ?>"><?php echo $row['movie_name']; ?></a>
+            <?php endwhile; ?>
+
+        </div>
+    </div>
 
 </body>
 

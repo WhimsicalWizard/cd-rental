@@ -3,32 +3,41 @@ include_once("dbcon.php");
 include_once("header.html");
 session_start();
 
-if (isset($_GET['id'])) {
-    $movieId = $_GET['id'];
+if (isset($_POST["submit"])) {
+    $file = $_FILES["image"]["tmp_name"];
+    $name = $_POST['name'];
+    $released =  $_POST['year'];
+    $available = $_POST['available'];
+    $genre = $_POST['genre'];
 
-    $sql = "SELECT * FROM movie WHERE movie_id = $movieId";
+    $file_ext = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+    $filename = $name . '.' . $file_ext;
+    $img_dir = "image/";
+    $destination = "image/" . $filename;
+    move_uploaded_file($file, $destination);
+
+    $sql = "INSERT INTO movie (movie_name, img_name,  released, total_disk, genre) values ('$name', '$filename',  '$released', '$available', '$genre')";
+
     $result = mysqli_query($con, $sql);
-
     if (!$result) {
         $_SESSION['message'] = "Update failed: " . mysqli_error($con);
     }
-
-    $row = mysqli_fetch_assoc($result);
-} else {
-
+    $_SESSION['message'] = "update successfull";
     header('Location: index.php');
     exit;
 }
-?>
 
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Movie</title>
-
+    <title>Document</title>
     <style>
         body {
             background-color: #020223;
@@ -42,16 +51,6 @@ if (isset($_GET['id'])) {
         h1 {
             text-align: center;
             margin-top: 20px;
-        }
-
-        img {
-            max-width: 100%;
-            max-height: 200px;
-            padding: 10px;
-            width: auto;
-            height: auto;
-            margin: 0 auto;
-            display: block;
         }
 
         form {
@@ -93,24 +92,33 @@ if (isset($_GET['id'])) {
             background-color: #0056b3;
         }
     </style>
-
 </head>
 
 <body>
-    <h1>Edit Movie</h1>
-    <img src=" <?php echo "image/" . $row['img_name'] ?>" alt="idk">
-    <form action="update.php" method="post">
-        <input type="hidden" name="movie_id" value="<?php echo $row['movie_id']; ?>">
+    <h1>Add Movie</h1>
+
+    <form action="add.php" method="post" enctype="multipart/form-data">
         <label>Movie Name</label>
-        <input type="text" name="name" value="<?php echo $row['movie_name']; ?>" required><br>
+        <input type="text" name="name" value="" required> <br>
+        <label>Upload Image</label>
+        <input type="file" name="image" value="" required><br>
         <label>Released Year</label>
-        <input type="text" name="year" value="<?php echo $row['released']; ?>" required><br>
+        <input type="text" name="year" value="" required><br>
         <label>Available</label>
-        <input type="text" name="available" value="<?php echo $row['total_disk']; ?>" required><br>
-        <label>Genre</label>
-        <input type="text" name="genre" value="<?php echo $row['genre']; ?>" required><br>
-        <input type="submit" value="Update" name="submit">
+        <input type="text" name="available" value="" required>
+        <br>
+        <label>genre</label>
+        <input type="text" name="genre" value="" required>
+        <br>
+        <input type="submit" value="Submit" name="submit">
     </form>
+    <div id="image-preview" style="display: none;">
+        <img id="preview" src="" alt="Uploaded Image">
+    </div>
+
+
+
+
 </body>
 
 </html>

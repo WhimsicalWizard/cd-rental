@@ -12,7 +12,6 @@ if (isset($_SESSION["user_id"]) && isset($_GET['rental_id'])) {
 
     $id = $rentalData['movie_id'];
 
-    //get the total no of disk
     $movieQuery = mysqli_query($con, "SELECT total_disk FROM movie WHERE movie_id = '$id'");
     $movieData = mysqli_fetch_assoc($movieQuery);
     $total_disk = $movieData['total_disk'];
@@ -24,7 +23,6 @@ if (isset($_SESSION["user_id"]) && isset($_GET['rental_id'])) {
     if ($return_status == 1) {
         $_SESSION['error'] = "This movie has already been returned.";
     } else {
-        // Update the rental record with the return date and set return_status to 1 (Returned)
         $total_disk++;
         $disk =  mysqli_query($con, "UPDATE movie SET total_disk= '$total_disk' WHERE movie_id = '$id'");
 
@@ -44,6 +42,5 @@ if (isset($_SESSION["user_id"]) && isset($_GET['rental_id'])) {
     $_SESSION['error'] = "Invalid request. Please try again.";
 }
 
-// Redirect back to the rent.php page
 header('Location: rent.php');
 exit;

@@ -1,6 +1,6 @@
 <?php
 include_once("dbcon.php");
-
+session_start();
 if (isset($_POST["submit"])) {
     $movieId = $_POST['movie_id'];
     $name = $_POST['name'];
@@ -12,8 +12,11 @@ if (isset($_POST["submit"])) {
     $result = mysqli_query($con, $sql);
 
     if (!$result) {
-        die("Update failed: " . mysqli_error($con));
+        $_SESSION['message'] = "Update failed: " . mysqli_error($con);
     }
-
-    echo "Data updated successfully.";
+    $_SESSION['message'] = "update successfull";
 }
+
+
+header('Location: index.php');
+exit;

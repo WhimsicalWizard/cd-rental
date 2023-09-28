@@ -2,13 +2,11 @@
 session_start();
 include_once('admin/dbcon.php');
 
-// Check for and display success message
 if (isset($_SESSION['message'])) {
     echo "<script>alert('" . $_SESSION['message'] . "');</script>";
     unset($_SESSION['message']);
 }
 
-// Check for and display error message
 if (isset($_SESSION['error'])) {
     echo "<script>alert('" . $_SESSION['error'] . "');</script>";
     unset($_SESSION['error']);
@@ -20,6 +18,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+echo $_SESSION['user_id'];
 $nameQuery = mysqli_query($con, "SELECT memberName FROM members WHERE m_id = '" . $_SESSION['user_id'] . "'");
 $nameRow = mysqli_fetch_assoc($nameQuery);
 $name = $nameRow['memberName'];
@@ -38,7 +37,7 @@ include_once('header.html');
     <title>Rent</title>
 
     <link rel="stylesheet" href="body.css">
-    <link rel="stylesheet" href=".css">
+    <link rel="stylesheet" href="style.css">
     <style>
         .sort {
             width: 30%;

@@ -73,7 +73,7 @@ $row = mysqli_fetch_assoc($result);
         <p>Genre: <?php echo $row['genre']; ?></p>
         <p>Released Year: <?php echo $row['released']; ?></p>
         <?php
-        echo "<p><a href=\"rentOng.php?id=$row[movie_id]\" onClick=\"return confirm('Are you sure you want to rent?')\" class=\"link-red\">Rent</a></p>";
+        echo "<p><a href=rentOng.php?id=$row[movie_id] onClick=return confirm('Are you sure you want to rent?') class=link-red>Rent</a></p>";
         ?>
 
 
