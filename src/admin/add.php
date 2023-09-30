@@ -97,7 +97,7 @@ if (isset($_POST["submit"])) {
 <body>
     <h1>Add Movie</h1>
 
-    <form action="add.php" method="post" enctype="multipart/form-data">
+    <form action="add.php" method="post">
         <label>Movie Name</label>
         <input type="text" name="name" value="" required> <br>
         <label>Upload Image</label>
