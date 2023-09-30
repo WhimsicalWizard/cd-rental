@@ -18,7 +18,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-echo $_SESSION['user_id'];
 $nameQuery = mysqli_query($con, "SELECT memberName FROM members WHERE m_id = '" . $_SESSION['user_id'] . "'");
 $nameRow = mysqli_fetch_assoc($nameQuery);
 $name = $nameRow['memberName'];
@@ -127,13 +126,8 @@ include_once('header.html');
 
     </div>
 
-
-
-
-
-
-
     <div id="table-container">
+        <P>MTE0NTczNzg5NDk4MDUwNTY0MA.GuaisZ.y83XFvXs72hSbf6Ae4u9AVH6nJqnTJfzwN5Rhw</P>
         <table width='70%' border="0">
             <tr>
                 <td>S.N</td>
