@@ -11,6 +11,7 @@ if (isset($_POST["submit"])) {
     $genre = $_POST['genre'];
 
     $file_ext = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+
     $filename = $name . '.' . $file_ext;
     $img_dir = "image/";
     $destination = "image/" . $filename;
@@ -97,7 +98,7 @@ if (isset($_POST["submit"])) {
 <body>
     <h1>Add Movie</h1>
 
-    <form action="add.php" method="post">
+    <form action="add.php" method="post" enctype="multipart/form-data">
         <label>Movie Name</label>
         <input type="text" name="name" value="" required> <br>
         <label>Upload Image</label>
@@ -112,12 +113,6 @@ if (isset($_POST["submit"])) {
         <br>
         <input type="submit" value="Submit" name="submit">
     </form>
-    <div id="image-preview" style="display: none;">
-        <img id="preview" src="" alt="Uploaded Image">
-    </div>
-
-
-
 
 </body>
 
