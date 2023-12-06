@@ -98,19 +98,66 @@ if (isset($_GET['id'])) {
 
 <body>
     <h1>Edit Movie</h1>
-    <img src=" <?php echo "image/" . $row['img_name'] ?>" alt="idk">
-    <form action="update.php" method="post">
+    <img src="<?php echo "image/" . $row['img_name'] ?>" alt="idk">
+    <form action="update.php" method="post" onsubmit="return validate()">
         <input type="hidden" name="movie_id" value="<?php echo $row['movie_id']; ?>">
         <label>Movie Name</label>
         <input type="text" name="name" value="<?php echo $row['movie_name']; ?>" required><br>
         <label>Released Year</label>
-        <input type="text" name="year" value="<?php echo $row['released']; ?>" required><br>
+        <input type="text" id="year" name="year" value="<?php echo $row['released']; ?>" required><br>
+        <p id="year_error"></p>
         <label>Available</label>
-        <input type="text" name="available" value="<?php echo $row['total_disk']; ?>" required><br>
+        <input type="text" id="available" name="available" value="<?php echo $row['total_disk']; ?>" required><br>
+        <p id="disk_error"></p>
+
         <label>Genre</label>
-        <input type="text" name="genre" value="<?php echo $row['genre']; ?>" required><br>
+        <select name="genre">
+            <option value="<?php echo $row['genre']; ?>"><?php echo $row['genre']; ?></option>
+        </select>
         <input type="submit" value="Update" name="submit">
     </form>
+
+    <script>
+        function validate() {
+            const year = document.getElementById("year").value;
+
+            const available = document.getElementById("available").value;
+            var b_year = yearVal(year);
+            var b_available = diskVal(available);
+
+            if (!(b_available && b_year)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function yearVal(year) {
+            if (isNaN(year)) {
+                document.getElementById("year_error").innerHTML = "Year must be a number";
+                return false;
+
+            } else if (year.length != 4) {
+                document.getElementById("year_error").innerHTML = "Year must of 4 digit";
+                return false;
+
+            } else {
+                document.getElementById("year_error").innerHTML = "";
+                return true;
+            }
+        }
+
+        function diskVal(available) {
+            if (isNaN(available)) {
+                document.getElementById("disk_error").innerHTML = "Disk must be a number";
+                return false;
+            } else {
+                document.getElementById("disk_error").innerHTML = "";
+                return true;
+            }
+        }
+    </script>
+
 </body>
 
 </html>

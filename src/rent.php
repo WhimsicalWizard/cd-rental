@@ -160,7 +160,7 @@ include_once('header.html');
             echo "<td>" . $row['genre'] . "</td>";
             echo "<td>" . $row['released'] . "</td>";
             echo "<td>";
-            if ($mov['return_status'] == 0) {
+            if ($mov['return_status'] == 1) {
                 echo "<a class='return-link' href='returnMovie.php?rental_id=" . $mov['r_id'] . "'>Return</a></td>";
             } else {
                 echo "N/A";

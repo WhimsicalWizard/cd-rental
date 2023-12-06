@@ -104,15 +104,60 @@ if (isset($_POST["submit"])) {
         <label>Upload Image</label>
         <input type="file" name="image" value="" required><br>
         <label>Released Year</label>
-        <input type="text" name="year" value="" required><br>
+        <input type="text" id="year" name="year" value="" required><br>
+        <p id="year_error"></p>
         <label>Available</label>
-        <input type="text" name="available" value="" required>
-        <br>
-        <label>genre</label>
-        <input type="text" name="genre" value="" required>
-        <br>
+        <input type="text" id="available" name="available" value="" required>
+        <p id="disk_error"></p>
+
+        <label>Genre</label>
+        <select name="genre">
+            <option value="Comedy">Comedy</option>
+            <option value="Action">Action</option>
+            <option value="Thriller">Thriller</option>
+        </select>
+
         <input type="submit" value="Submit" name="submit">
     </form>
+
+    <script>
+        function validate() {
+            var year = document.getElementById("year").value;
+            var available = document.getElementById("available").value;
+            var b_year = yearVal(year);
+            var b_available = diskVal(available);
+
+            if (!(b_year && b_available)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function yearVal(year) {
+            if (isNaN(year)) {
+                document.getElementById("year_error").innerHTML = "Year must be a number";
+                return false;
+
+            } else if (year.toString().length != 4) {
+                document.getElementById("year_error").innerHTML = "Year must of 4 digit";
+                return false;
+            } else {
+                document.getElementById("year_error").innerHTML = "";
+                return true;
+            }
+        }
+
+        function diskVal(available) {
+            if (isNaN(available)) {
+                document.getElementById("disk_error").innerHTML = "Disk must be a number";
+                return false;
+            } else {
+                document.getElementById("disk_error").innerHTML = "";
+                return true;
+            }
+        }
+    </script>
 
 </body>
 

@@ -17,4 +17,7 @@ if (!$result) {
 } else {
     echo "<script>alert('Data deleted successfully');</script>";
     echo "<script>window.location.href = 'logout.php';</script>";
+    
 }
+session_destroy();
+?>

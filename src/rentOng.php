@@ -15,19 +15,20 @@ if (isset($_SESSION["user_id"]) && isset($_GET['id'])) {
     $checkQuery = mysqli_query($con, "SELECT * FROM rent WHERE movie_id = '$id' AND rented_by = '$user' ORDER BY r_id DESC LIMIT 1");
     $check = mysqli_fetch_assoc($checkQuery);
     $status = $check['return_status'];
-    if ($status == 1) {
+    if ($status == 0) {
         $total_disk--;
 
         $user = mysqli_real_escape_string($con, $user);
         $id = mysqli_real_escape_string($con, $id);
 
+
+
         mysqli_query($con, "UPDATE movie SET total_disk = '$total_disk' WHERE movie_id = '$id'");
 
-        $sql = "INSERT INTO rent (rented_by, movie_id, r_date, return_date) VALUES (?, ?, ?, ?)";
-        $stmt = mysqli_prepare($con, $sql);
-
-        mysqli_stmt_bind_param($stmt, "ssss", $user, $id, $rentDate, $returnDate);
-        $result = mysqli_stmt_execute($stmt);
+        $sql = "INSERT INTO rent (rented_by, movie_id, r_date, return_date, return_status) VALUES ( '$user', '$id', '$rentDate','$returnDate',1)";
+       
+        
+        $result = mysqli_query($con, $sql);
 
         if ($result) {
             $_SESSION['message'] = "Rent Successful.";
