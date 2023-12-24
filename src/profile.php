@@ -1,16 +1,16 @@
 <?php
 include_once('admin/dbcon.php');
 
-
 session_start();
-
+if (isset($_SESSION["error_deleting"])) {
+    echo "<script>alert('" . $_SESSION["error_deleting"] . "');</script>";
+    unset($_SESSION["error_deleting"]);
+}
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: info.html");
     exit();
-}
-
-$result = mysqli_query($con, "SELECT * FROM members WHERE m_id=" . $_SESSION['user_id']);
+}$result = mysqli_query($con, "SELECT * FROM members WHERE m_id=" . $_SESSION['user_id']);
 $row = mysqli_fetch_assoc($result);
 ?>
 <!DOCTYPE html>
@@ -153,7 +153,7 @@ $row = mysqli_fetch_assoc($result);
                 if (username === "") failmsg += "No Username was entered.\n";
                 else if (username.length < 5) failmsg += "Username must be at least 5 characters.\n";
                 if (/[^a-zA-Z0-9_-]/.test(username)) failmsg += "Only a-z, A-Z, 0-9, - and _ allowed in Username.\n";
-                console.log(failmsg);
+                
                 if (failmsg == "") {
                     $.ajax({
                         method: "POST",
@@ -179,25 +179,20 @@ $row = mysqli_fetch_assoc($result);
         })
     </script>
 
-    <script>
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
         $(function() {
             $("#passwordupdate").on('click', function() {
                 var password = $("#password1").val();
                 var password2 = $("#password2").val();
-                var failPassword;
+                var failPassword ="";
 
-                if (password != password2) {
-                    failPassword += "The password doesn't match";
-                } else {
-                    failPassword = validatePassword();
-                }
-
-                function validatePassword() {
-                    if (password === "") failPassword += "No Password was entered.\n";
+              if(password != password2) failPassword += " Two password doesnt match"
+                  else  if (password == "") failPassword += "No Password was entered.\n";
                     else if (password.length < 6) failPassword += "Password must be at least 6 characters.\n";
                     else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) failPassword += "Password requires at least one lowercase letter, one uppercase letter, and one digit.\n";
-                    return "";
-                }
+                  
+                    
 
                 if (failPassword == "") {
                     $.ajax({
@@ -209,15 +204,15 @@ $row = mysqli_fetch_assoc($result);
                         success: function(response) {
                             console.log(response);
                             if (response == "error") {
-                                $("#passwordcheck").text("New password cannot be the same as the old password");
+                                $("#passwordcheck").text("New password cannot be the same as the old password").css("color", "red");
                             }
                             if (response == "success") {
-                                $("#passwordcheck").text("Password change successful");
-                            }
+        $("#passwordcheck").text("Password change successful").css("color", "green");
+    }
                         }
                     });
                 } else {
-                    $("#password").text(failPassword);
+                    $("#passwordcheck").text(failPassword);
                 }
             })
         })

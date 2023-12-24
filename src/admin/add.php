@@ -3,6 +3,11 @@ include_once("dbcon.php");
 include_once("header.html");
 session_start();
 
+
+if (isset($_SESSION["error"])) {
+    echo "<script>alert('" . $_SESSION["error"] . "');</script>";
+    unset($_SESSION["error"]);
+}  
 if (isset($_POST["submit"])) {
     $file = $_FILES["image"]["tmp_name"];
     $name = $_POST['name'];
@@ -11,7 +16,11 @@ if (isset($_POST["submit"])) {
     $genre = $_POST['genre'];
 
     $file_ext = pathinfo($_FILES["image"]["name"], PATHINFO_EXTENSION);
+ if($file_ext != "png"  && $file_ext != "jpg" && $file_ext != "jpeg"){
 
+    $_SESSION["error"] = "$file_ext  isnt a supported format";
+    header('Location: add.php');
+ }else {
     $filename = $name . '.' . $file_ext;
     $img_dir = "image/";
     $destination = "image/" . $filename;
@@ -26,6 +35,7 @@ if (isset($_POST["submit"])) {
     $_SESSION['message'] = "update successfull";
     header('Location: index.php');
     exit;
+}
 }
 
 
@@ -101,8 +111,8 @@ if (isset($_POST["submit"])) {
     <form action="add.php" method="post" enctype="multipart/form-data">
         <label>Movie Name</label>
         <input type="text" name="name" value="" required> <br>
-        <label>Upload Image</label>
-        <input type="file" name="image" value="" required><br>
+        <label>Upload Image</label> <p>Only Png and Jpg are supported</p>
+       <input type="file" name="image" value="" required><br> 
         <label>Released Year</label>
         <input type="text" id="year" name="year" value="" required><br>
         <p id="year_error"></p>

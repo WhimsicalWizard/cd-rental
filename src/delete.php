@@ -7,17 +7,34 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$userId = $_SESSION['user_id'];
-$rent =  mysqli_query($con, "DELETE FROM rent WHERE rented_by= $userId");
+// Validate and sanitize user input
+$userId = mysqli_real_escape_string($con, $_SESSION['user_id']);
 
-$result = mysqli_query($con, "DELETE FROM members WHERE m_id=$userId");
+// Check return_status
+$checkQuery = mysqli_query($con, "SELECT * FROM rent WHERE return_status = '1' AND rented_by = '$userId'");
+$check = mysqli_fetch_assoc($checkQuery);
 
-if (!$result) {
-    die("Failed to delete: " . mysqli_error($con));
+if ($check) {
+    // Do not allow deletion if return_status is '1'
+    $_SESSION["error_deleting"]= "Failed to delete user account, You havent returned movie";
+
+     header("Location: profile.php");
+    exit();
 } else {
-    echo "<script>alert('Data deleted successfully');</script>";
-    echo "<script>window.location.href = 'logout.php';</script>";
-    
+    // Allow deletion
+    $deleteRentQuery = mysqli_query($con, "DELETE FROM rent WHERE rented_by = $userId");
+    $deleteMembersQuery = mysqli_query($con, "DELETE FROM members WHERE m_id = $userId");
+
+    if (!$deleteRentQuery || !$deleteMembersQuery) {
+        // Deletion failed
+        die("Failed to delete: " . mysqli_error($con));
+    } else {
+       
+        echo "<script>alert('Data deleted successfully');</script>";
+        echo "<script>window.location.href = 'logout.php';</script>";
+
+    }
 }
-session_destroy();
+
+
 ?>

@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
                 <p><?php echo $error; ?></p>
             <?php } ?>
 
-            <form method="post" action="">
+            <form method="post" action="login.php">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                 <label for="password">Password:</label>

@@ -52,15 +52,16 @@ if (isset($_SESSION['message'])) {
             padding: 10px;
         }
 
-        .view a {
+        #movie a {
+            border: none;
             display: block;
             text-decoration: none;
             color: #fff;
             font-weight: bold;
         }
 
-        .view a:hover {
-            color: #00aa0f;
+        #movie a:hover {
+            color: #00aaff;
         }
     </style>
 </head>
@@ -71,7 +72,7 @@ if (isset($_SESSION['message'])) {
         <div class="view">
 
             <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-                <a href="edit.php?id=<?php echo $row['movie_id']; ?>"><?php echo $row['movie_name']; ?></a>
+                <a id="movie" href="edit.php?id=<?php echo $row['movie_id']; ?>"><?php echo $row['movie_name']; ?></a> <br>
             <?php endwhile; ?>
 
         </div>

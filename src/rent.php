@@ -38,14 +38,7 @@ include_once('header.html');
     <link rel="stylesheet" href="body.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        .sort {
-            width: 30%;
-            align-content: center;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 10px;
-        }
+        
 
         .name {
             width: 30%;
