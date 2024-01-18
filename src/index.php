@@ -37,7 +37,7 @@ if (!$result) die("Database fetch failed: " . mysqli_error($con));
         }
 
         .link-red:hover {
-            color: blue;
+            color: red;
         }
 
         table,

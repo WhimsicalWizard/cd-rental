@@ -7,15 +7,15 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Validate and sanitize user input
-$userId = mysqli_real_escape_string($con, $_SESSION['user_id']);
 
-// Check return_status
+$userId =$_SESSION['user_id'];
+
+
 $checkQuery = mysqli_query($con, "SELECT * FROM rent WHERE return_status = '1' AND rented_by = '$userId'");
 $check = mysqli_fetch_assoc($checkQuery);
 
 if ($check) {
-    // Do not allow deletion if return_status is '1'
+   // cannot delete 
     $_SESSION["error_deleting"]= "Failed to delete user account, You havent returned movie";
 
      header("Location: profile.php");
@@ -35,6 +35,4 @@ if ($check) {
 
     }
 }
-
-
 ?>

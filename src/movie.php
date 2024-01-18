@@ -9,6 +9,10 @@ include_once("admin/dbcon.php");
 
 $id = $_GET["id"];
 $result = mysqli_query($con, "select * from movie where movie_id = $id");
+$return_stat = mysqli_query($con , "SELECT *  FROM rent WHERE movie_id = $id");
+$stat =mysqli_fetch_assoc($return_stat);
+//echo $stat['return_status'];
+
 if (!$result) {
     die("Error: " . mysqli_error($con));
 }
@@ -54,12 +58,21 @@ $row = mysqli_fetch_assoc($result);
         }
 
         .link-red {
-            color: red;
+            color: blue;
             text-decoration: none;
         }
 
         .link-red:hover {
-            color: blue;
+            color: red;
+        }
+        a.return-link {
+            color: #ff5f50;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a.return-link:hover {
+            color: green;
         }
     </style>
 </head>
@@ -73,8 +86,12 @@ $row = mysqli_fetch_assoc($result);
         <p>Genre: <?php echo $row['genre']; ?></p>
         <p>Released Year: <?php echo $row['released']; ?></p>
         <?php
+        if ($stat['return_status'] == 1) {
+            echo "<a class='return-link' href='returnMovie.php?rental_id=" . $stat['r_id'] . " '>Return</a></td>";
+        } else {
+          
         echo "<p><a href=rentOng.php?id=$row[movie_id] onClick=return confirm('Are you sure you want to rent?') class=link-red>Rent</a></p>";
-        ?>
+         } ?>
 
 
     </div>
