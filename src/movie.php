@@ -86,12 +86,10 @@ $row = mysqli_fetch_assoc($result);
         <p>Genre: <?php echo $row['genre']; ?></p>
         <p>Released Year: <?php echo $row['released']; ?></p>
         <?php
-        if ($stat['return_status'] == 1) {
-            echo "<a class='return-link' href='returnMovie.php?rental_id=" . $stat['r_id'] . " '>Return</a></td>";
-        } else {
+        
           
         echo "<p><a href=rentOng.php?id=$row[movie_id] onClick=return confirm('Are you sure you want to rent?') class=link-red>Rent</a></p>";
-         } ?>
+          ?>
 
 
     </div>

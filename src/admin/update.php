@@ -1,6 +1,9 @@
 <?php
 include_once("dbcon.php");
 session_start();
+
+include_once("header.html");
+
 if (isset($_POST["submit"])) {
     $movieId = $_POST['movie_id'];
     $name = $_POST['name'];

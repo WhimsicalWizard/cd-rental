@@ -2,7 +2,10 @@
 include_once("dbcon.php");
 include_once("header.html");
 session_start();
-
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login.php");
+    exit();
+}
 $sql = "SELECT * FROM movie";
 $result = mysqli_query($con, $sql);
 

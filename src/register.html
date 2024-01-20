@@ -16,6 +16,7 @@
       failMsg += validateLastname(document.getElementById('lastname').value);
       failMsg += validateNumber(document.getElementById('phone').value);
       failMsg += validateUsername(document.getElementById('username').value);
+      failMsg += validateCity(document.getElementById('city').value);
       failMsg += validateEmail(document.getElementById('email').value);
       var password = document.getElementById('password').value;
       var password2 = document.getElementById('password1').value;
@@ -51,6 +52,11 @@
       if (field === "") return "No Username was entered.\n";
       else if (field.length < 5) return "Username must be at least 5 characters.\n";
       else if (/[^a-zA-Z0-9_-]/.test(field)) return "Only a-z, A-Z, 0-9, - and _ allowed in Username.\n";
+      return "";
+    }
+    function validateCity(field) {
+      if (field === "") return "No City was entered.\n";
+      else if (!/^[a-zA-Z\s]+$/.test(field)) return "Enter Valid city Name.\n";
       return "";
     }
 
@@ -93,10 +99,10 @@
         <input type="text" id="city" name="city" required>
 
         <label for="phone">Phone Number:</label>
-        <input type="text" id="phone" name="phone" required>
+        <input type="number" id="phone" name="phone" required>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="text" id="email" name="email" required>
 
         <label for="password1">Password:</label>
         <input type="password" id="password1" name="password1" required>

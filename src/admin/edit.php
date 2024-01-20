@@ -2,7 +2,10 @@
 include_once("dbcon.php");
 include_once("header.html");
 session_start();
-
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: login.php");
+    exit();
+}
 if (isset($_GET['id'])) {
     $movieId = $_GET['id'];
 
